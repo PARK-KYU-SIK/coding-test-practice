@@ -9,23 +9,28 @@ t = t1, t2
 
 import numpy as np
 
-def quiz_03(numbers,target) :
-    answer = []
-    basic_ar = np.ones(shape=(1,int(len(numbers)))).tolist()[0]
-    cnt = 0
-    for times in range(-1,2,2) :
-        for i,x in enumerate(basic_ar) :
-            new_x = x * times
-            basic_ar[i] = new_x
-            check = int(sum(basic_ar))
-            if check == target :
-                cnt += 1
-                answer.append(basic_ar)
-            else :
-                pass
-    return cnt
+def quiz_03(numbers, t) :
 
-quiz_03(n1,t1)
+    answer = 0
+    ls = 2 ** len(numbers)
+    ns = len(numbers)
+    ar = np.ones(shape=(ls,ns))
+
+    for j, number in enumerate(numbers) :
+        cnt = 1
+        for i in range(ls) :
+            if i == (((2)**(ns-j-1)) * cnt) - 1 :
+                cnt += 1
+                ar[i,j] = ar[i,j] * number * ((-1)** (cnt + 1))
+            else :
+                ar[i,j] = ar[i,j] * number * ((-1)** (cnt + 1))
+        
+     
+    for i in range(ls) :
+        if sum(ar[i]) == t :
+            answer += 1
+
+    return answer
 
 # for input in zip(n,t) :
 #     num, tar = input
